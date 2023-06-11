@@ -34,13 +34,34 @@ export const signIn = async (email, password) => {
   }
 };
 
-export const addStoreInfo = async (address, gst, logo, storeTimings) => {
+export const addProduct = async (productData, authToken) => {
   try {
-    const response = await fetch(`${BASE_URL}/sellers/info`, {
+    
+    console.log(productData)
+    const response = await fetch(`${BASE_URL}/products/`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        // Include authentication headers if required
+        'auth-token': `${authToken}`,
+      },
+      body: JSON.stringify(productData),
+    });
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error('Error adding product:', error);
+    throw error;
+  }
+};
+
+export const addStoreInfo = async (address, gst, logo, storeTimings,authToken) => {
+  try {
+    console.log(authToken)
+    const response = await fetch(`${BASE_URL}/sellers/info`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        "auth-token": `${authToken}`, 
       },
       body: JSON.stringify({ address, gst, logo, storeTimings }),
     });
@@ -52,27 +73,10 @@ export const addStoreInfo = async (address, gst, logo, storeTimings) => {
   }
 };
 
-export const addProduct = async (category, subCategory, productName, mrp, sp, qty, images) => {
-  try {
-    const response = await fetch(`${BASE_URL}/api/products`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        // Include authentication headers if required
-      },
-      body: JSON.stringify({ category, subCategory, productName, mrp, sp, qty, images }),
-    });
-    const data = await response.json();
-    return data;
-  } catch (error) {
-    console.error('Error adding product:', error);
-    throw error;
-  }
-};
 
-export const getSellerProducts = async (sellerId) => {
+export const getSellerProducts = async (user) => {
   try {
-    const response = await fetch(`${BASE_URL}/api/products/seller/${sellerId}`);
+    const response = await fetch(`${BASE_URL}/products/seller/${user._id}`);
     const data = await response.json();
     return data;
   } catch (error) {

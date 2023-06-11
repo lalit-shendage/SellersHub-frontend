@@ -1,33 +1,26 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { Link } from 'react-router-dom';
-import { ProductContext } from '../contexts/ProductContext';
+import { AuthContext } from '../contexts/AuthContext';
 
 const SellerProducts = () => {
-  const { sellerProducts, getSellerProducts, removeProductFromSeller } = useContext(ProductContext);
+  const { sellerProducts, getSellerProducts, user } = useContext(AuthContext);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     fetchSellerProducts();
   }, []);
 
-  const fetchSellerProducts = async () => {
+  const fetchSellerProducts = async (user) => {
     try {
-      await getSellerProducts();
+      console.log(user)
+      await getSellerProducts(user);
       setLoading(false);
     } catch (error) {
       console.error('Error fetching seller products:', error);
     }
   };
 
-  const handleRemoveProduct = async (productId) => {
-    try {
-      await removeProductFromSeller(productId);
-      console.log('Product removed successfully!');
-      fetchSellerProducts(); // Fetch the updated seller products
-    } catch (error) {
-      console.error('Error removing product:', error);
-    }
-  };
+
 
   return (
     <div>
@@ -39,7 +32,6 @@ const SellerProducts = () => {
           {sellerProducts.map((product) => (
             <li key={product.id}>
               <strong>{product.name}</strong> - {product.price}
-              <button onClick={() => handleRemoveProduct(product.id)}>Remove</button>
             </li>
           ))}
         </ul>

@@ -1,12 +1,13 @@
-import React, { useContext, useState } from 'react';
-import { ProductContext } from '../contexts/ProductContext';
+import React, { useState, useContext } from 'react';
+import { AuthContext } from '../contexts/AuthContext';
+import Navbar from './Navbar';
+
 
 const AddProduct = () => {
-  const { addProduct } = useContext(ProductContext);
-
+  const { user, addProduct } = useContext(AuthContext);
   const [category, setCategory] = useState('');
   const [subCategory, setSubCategory] = useState('');
-  const [productName, setProductName] = useState('');
+  const [name, setName] = useState('');
   const [mrp, setMRP] = useState('');
   const [sp, setSP] = useState('');
   const [qty, setQty] = useState('');
@@ -20,8 +21,8 @@ const AddProduct = () => {
     setSubCategory(e.target.value);
   };
 
-  const handleProductNameChange = (e) => {
-    setProductName(e.target.value);
+  const handleNameChange = (e) => {
+    setName(e.target.value);
   };
 
   const handleMRPChange = (e) => {
@@ -37,36 +38,39 @@ const AddProduct = () => {
   };
 
   const handleImageChange = (e) => {
-    // Assuming multiple image selection is allowed
-    const files = Array.from(e.target.files);
-    const imageUrls = files.map((file) => URL.createObjectURL(file));
-    setImages(imageUrls);
+    const urls = e.target.value.split('\n');
+    setImages(urls);
+  };
+
+  const handleAddProduct = async (user) => {
+    try {
+       
+
+      await addProduct(category, subCategory, name, mrp, sp, qty, images);
+      console.log('Product added successfully');
+      // Reset form fields after submission
+      setCategory('');
+      setSubCategory('');
+      setName('');
+      setMRP('');
+      setSP('');
+      setQty('');
+      setImages([]);
+    } catch (error) {
+      console.error('Error adding product:', error);
+    }
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const productData = {
-      category,
-      subCategory,
-      productName,
-      mrp,
-      sp,
-      qty,
-      images,
-    };
-    addProduct(productData);
-    // Reset form fields after submission
-    setCategory('');
-    setSubCategory('');
-    setProductName('');
-    setMRP('');
-    setSP('');
-    setQty('');
-    setImages([]);
+    console.log(user)
+    handleAddProduct(user);
+    
   };
 
   return (
     <div>
+      <Navbar/>
       <h2>Add Product</h2>
       <form onSubmit={handleSubmit}>
         <label>
@@ -81,7 +85,7 @@ const AddProduct = () => {
         <br />
         <label>
           Product Name:
-          <input type="text" value={productName} onChange={handleProductNameChange} />
+          <input type="text" value={name} onChange={handleNameChange} />
         </label>
         <br />
         <label>
@@ -101,8 +105,7 @@ const AddProduct = () => {
         <br />
         <label>
           Images:
-          <input type="file" multiple onChange={handleImageChange} />
-        </label>
+          <textarea value={images.join('\n')} onChange={handleImageChange} />        </label>
         <br />
         <button type="submit">Add Product</button>
       </form>

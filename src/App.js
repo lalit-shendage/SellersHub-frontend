@@ -12,11 +12,10 @@ import SellerProducts from './components/SellerProducts';
 function App() {
   return (
     <>
-    
         <Routes>
         {/* <Navbar/> */}
-          <Route exact path="/signin" element={<SignIn/>} />
-          <Route exact path="/" element={<SignUp/>} />
+          <Route exact path="/" element={<SignIn/>} />
+          <Route exact path="/signup" element={<SignUp/>} />
           <Route exact path="/storeinfo" element={<StoreInfo/>} />
           <Route exact path="/addproduct" element={<AddProduct/>} />
           <Route exact path="/dashboard" element={<Dashboard/>} />

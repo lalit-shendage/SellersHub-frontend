@@ -4,7 +4,7 @@ import { signIn, signUp, addStoreInfo, addProduct, getSellerProducts, removeProd
 const AuthContext = createContext();
 
 const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState();
   const [token, setToken] = useState('');
   
 
@@ -21,8 +21,10 @@ const AuthProvider = ({ children }) => {
     try {
       const data = await signIn(email, password);
       setToken(data.token);
-      // Store the token in localStorage
       localStorage.setItem('authToken', data.token);
+       // Fetch user data using the token
+      setUser(data.seller)
+      
     } catch (error) {
       console.error('Error signing in:', error);
       throw error;
@@ -53,9 +55,26 @@ const AuthProvider = ({ children }) => {
   };
 
   // Add product
-  const handleAddProduct = async (category, subCategory, productName, mrp, sp, qty, images) => {
+  const handleAddProduct = async (category, subCategory, name, mrp, sp, qty, images) => {
     try {
-      await addProduct(category, subCategory, productName, mrp, sp, qty, images);
+      const sellerId = user._id;
+      console.log(sellerId)
+      const productData = {
+        name,
+        category,
+        subCategory,
+        mrp,
+        sellers: [
+          {
+            seller: sellerId,
+            sellingPrice: sp,
+            quantity: qty,
+          },
+        ],
+        images,
+      };
+        console.log(token)
+      await addProduct(productData,token);
     } catch (error) {
       console.error('Error adding product:', error);
       throw error;
@@ -63,9 +82,9 @@ const AuthProvider = ({ children }) => {
   };
 
   // Get seller products
-  const handleGetSellerProducts = async (sellerId) => {
+  const handleGetSellerProducts = async (user) => {
     try {
-      const data = await getSellerProducts(sellerId);
+      const data = await getSellerProducts(user);
       return data;
     } catch (error) {
       console.error('Error getting seller products:', error);
