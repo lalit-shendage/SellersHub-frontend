@@ -32,13 +32,11 @@ const StoreInfo = () => {
     e.preventDefault();
     try {
       
-      // Call the addStoreInfo function from the API and pass the required data
+     
       await addStoreInfo(address, gst, logo, storeTimings, token);
-      // Handle successful store info addition, such as navigating to the dashboard
       console.log('Store info added successfully!');
-      navigate('/dashboard'); // Navigate to the dashboard page
+      navigate('/dashboard'); 
     } catch (error) {
-      // Handle store info addition error
       console.error('Error adding store info:', error);
     }
   };
@@ -46,32 +44,65 @@ const StoreInfo = () => {
   return (
     <div>
       <Navbar/>
-      <h2>Store Info</h2>
-      <form onSubmit={handleSubmit}>
-        <label>
-          Address:
-          <input type="text" value={address} onChange={handleAddressChange} />
-        </label>
-        <br />
-        <label>
-          GST Number:
-          <input type="text" value={gst} onChange={handleGstChange} />
-        </label>
-        <br />
-        <label>
-          Logo:
-          <input type="text" value={logo} onChange={handleLogoChange} />
-        </label>
-        <br />
-        <label>
-          Store Timings:
-          <input type="text" value={storeTimings} onChange={handleStoreTimingsChange} />
-        </label>
-        <br />
-        <button type="submit">Save Store Info</button>
-      </form>
+      <div className="container mt-5" style={{ maxWidth: "400px" }}>
+        <h2>Store Info</h2>
+        <form onSubmit={handleSubmit}>
+          <div className="mb-3">
+            <label htmlFor="address" className="form-label">
+              Address:
+            </label>
+            <input
+              type="text"
+              className="form-control"
+              id="address"
+              value={address}
+              onChange={handleAddressChange}
+            />
+          </div>
+          <div className="mb-3">
+            <label htmlFor="gst" className="form-label">
+              GST Number:
+            </label>
+            <input
+              type="text"
+              className="form-control"
+              id="gst"
+              value={gst}
+              onChange={handleGstChange}
+            />
+          </div>
+          <div className="mb-3">
+            <label htmlFor="logo" className="form-label">
+              Logo:
+            </label>
+            <input
+              type="text"
+              className="form-control"
+              id="logo"
+              value={logo}
+              onChange={handleLogoChange}
+            />
+          </div>
+          <div className="mb-3">
+            <label htmlFor="storeTimings" className="form-label">
+              Store Timings:
+            </label>
+            <input
+              type="text"
+              className="form-control"
+              id="storeTimings"
+              value={storeTimings}
+              onChange={handleStoreTimingsChange}
+            />
+          </div>
+          <button type="submit" className="btn btn-primary">
+            Save Store Info
+          </button>
+        </form>
+      </div>
     </div>
   );
+  
 };
 
 export default StoreInfo;

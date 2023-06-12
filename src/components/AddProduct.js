@@ -70,47 +70,101 @@ const AddProduct = () => {
 
   return (
     <div>
-      <Navbar/>
-      <h2>Add Product</h2>
-      <form onSubmit={handleSubmit}>
-        <label>
-          Category:
-          <input type="text" value={category} onChange={handleCategoryChange} />
-        </label>
-        <br />
-        <label>
-          Sub Category:
-          <input type="text" value={subCategory} onChange={handleSubCategoryChange} />
-        </label>
-        <br />
-        <label>
-          Product Name:
-          <input type="text" value={name} onChange={handleNameChange} />
-        </label>
-        <br />
-        <label>
-          MRP:
-          <input type="number" value={mrp} onChange={handleMRPChange} />
-        </label>
-        <br />
-        <label>
-          Selling Price:
-          <input type="number" value={sp} onChange={handleSPChange} />
-        </label>
-        <br />
-        <label>
-          Quantity:
-          <input type="number" value={qty} onChange={handleQtyChange} />
-        </label>
-        <br />
-        <label>
-          Images:
-          <textarea value={images.join('\n')} onChange={handleImageChange} />        </label>
-        <br />
-        <button type="submit">Add Product</button>
-      </form>
+      <Navbar />
+      <div className="container mt-5 "style={{ maxWidth: "400px" }}>
+        <h2>Add Product</h2>
+        <form onSubmit={handleSubmit}>
+          <div className="mb-3">
+            <label htmlFor="category" className="form-label">
+              Category:
+            </label>
+            <input
+              type="text"
+              className="form-control"
+              id="category"
+              value={category}
+              onChange={handleCategoryChange}
+            />
+          </div>
+          <div className="mb-3">
+            <label htmlFor="subCategory" className="form-label">
+              Sub Category:
+            </label>
+            <input
+              type="text"
+              className="form-control"
+              id="subCategory"
+              value={subCategory}
+              onChange={handleSubCategoryChange}
+            />
+          </div>
+          <div className="mb-3">
+            <label htmlFor="productName" className="form-label">
+              Product Name:
+            </label>
+            <input
+              type="text"
+              className="form-control"
+              id="productName"
+              value={name}
+              onChange={handleNameChange}
+            />
+          </div>
+          <div className="mb-3">
+            <label htmlFor="mrp" className="form-label">
+              MRP:
+            </label>
+            <input
+              type="number"
+              className="form-control"
+              id="mrp"
+              value={mrp}
+              onChange={handleMRPChange}
+            />
+          </div>
+          <div className="mb-3">
+            <label htmlFor="sellingPrice" className="form-label">
+              Selling Price:
+            </label>
+            <input
+              type="number"
+              className="form-control"
+              id="sellingPrice"
+              value={sp}
+              onChange={handleSPChange}
+            />
+          </div>
+          <div className="mb-3">
+            <label htmlFor="quantity" className="form-label">
+              Quantity:
+            </label>
+            <input
+              type="number"
+              className="form-control"
+              id="quantity"
+              value={qty}
+              onChange={handleQtyChange}
+            />
+          </div>
+          <div className="mb-3">
+            <label htmlFor="images" className="form-label">
+              Images:
+            </label>
+            <textarea
+              className="form-control"
+              id="images"
+              value={images}
+              onChange={handleImageChange}
+            />
+          </div>
+          <button type="submit" className="btn btn-primary">
+            Add Product
+          </button>
+        </form>
+      </div>
     </div>
   );
+  
 };
 
 export default AddProduct;

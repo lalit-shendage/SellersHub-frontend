@@ -19,10 +19,7 @@ function App() {
           <Route exact path="/storeinfo" element={<StoreInfo/>} />
           <Route exact path="/addproduct" element={<AddProduct/>} />
           <Route exact path="/dashboard" element={<Dashboard/>} />
-          <Route exact path="/sellerproducts" element={<SellerProducts/>} />
-          {/* Add more routes as needed */}
-          {/* <Route component={NotFound} /> */}
-        </Routes>
+          <Route exact path="/sellerproducts/:sellerId" element={<SellerProducts />} />        </Routes>
         </>
   );
 }
